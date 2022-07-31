@@ -6,12 +6,14 @@ name = "pypi"
 [packages]
 scikit-learn = "==1.0.2"
 flask = "*"
+gunicorn = "*"
 mlflow = "*"
+matplotlib = "*"
 pymongo = "*"
-prefect = "==2.0b10"
 
 [dev-packages]
 requests = "*"
+ipykernel = "*"
 
 [requires]
 python_version = "3.9"

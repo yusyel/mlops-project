@@ -13,6 +13,7 @@ pandas = "*"
 seaborn = "*"
 hyperopt = "*"
 xgboost = "*"
+matplotlib = "*"
 
 [dev-packages]
 requests = "*"
