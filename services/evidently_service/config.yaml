@@ -1,0 +1,32 @@
+datasets:
+  chd:
+    column_mapping:
+      categorical_features:
+        - 'male'
+        - 'education'
+        - 'currentsmoker'
+        - 'bpmeds'
+        - 'prevalentstroke'
+        - 'prevalenthyp'
+        - 'diabetes'
+      numerical_features:
+        - 'age'
+        - 'cigsperday'
+        - 'totchol'
+        - 'sysbp'
+        - 'bmi'
+        - 'heartrate'
+        - 'glucose'
+    data_format:
+      header: true
+      separator: ','
+    monitors:
+      - data_drift
+    reference_file: ./datasets/train.parquet
+service:
+  calculation_period_sec: 2
+  min_reference_size: 30
+  moving_reference: false
+  datasets_path: datasets
+  use_reference: true
+  window_size: 5
