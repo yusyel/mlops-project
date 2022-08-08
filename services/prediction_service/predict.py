@@ -7,11 +7,12 @@ import mlflow.sklearn
 import requests
 from pymongo import MongoClient
 import os
+from prefect import flow, task, get_run_logger
 # %%
 
 
 
-best_model = "8c805ce1a2ac4e3198ab41e420396ce7"
+best_model = "c2fec2fe0fd24fbe9580149770421bf0"
 logged_model = f"./1/{best_model}/artifacts/model"
 model = mlflow.sklearn.load_model(logged_model)
 
@@ -27,10 +28,16 @@ db = mongo_client.get_database("prediction_service")
 collections = db.get_collection('data')
 
 
+from prefect.deployments import Deployment
+from prefect.orion.schemas.schedules import IntervalSchedule
+from prefect.flow_runners import SubprocessFlowRunner
+from datetime import timedelta
+
 @app.route('/predict', methods=['POST'])
+@flow
 def predict():
     record = request.get_json()
-
+    logger = get_run_logger()
     y_pred = model.predict_proba(record)[0, 1]
     risk = y_pred >= 0.5
     result = {
@@ -39,14 +46,18 @@ def predict():
     }
     save_to_db(record, float(y_pred))
     send_to_evidently_service(record, float(y_pred))
+    logger.info(f"Result: {result}")
     return jsonify(result)
 
 
+
+@task
 def save_to_db(record, prediction):
     rec = record.copy()
     rec['prediction'] = prediction
     collections.insert_one(rec)
 
+@task
 def send_to_evidently_service(record, prediction):
     rec = record.copy()
     rec['prediction'] = prediction

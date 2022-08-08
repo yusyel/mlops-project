@@ -1,0 +1,13 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pyarrow = "*"
+prefect = "==2.0b10"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
