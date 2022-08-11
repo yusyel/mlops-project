@@ -11,6 +11,7 @@ mlflow = "*"
 matplotlib = "*"
 pymongo = "*"
 prefect = "==2.0.4"
+isort = "*"
 
 [dev-packages]
 requests = "*"
@@ -18,6 +19,7 @@ ipykernel = "*"
 pylint = "*"
 pytest = "*"
 black = "*"
+pre-commit = "*"
 
 [requires]
 python_version = "3.9"
