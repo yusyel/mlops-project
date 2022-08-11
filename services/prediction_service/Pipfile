@@ -15,6 +15,8 @@ prefect = "==2.0b10"
 [dev-packages]
 requests = "*"
 ipykernel = "*"
+pylint = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.9"

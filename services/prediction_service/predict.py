@@ -1,5 +1,4 @@
 # %%
-import json
 from flask import Flask, request, jsonify
 from matplotlib import collections
 import mlflow
@@ -10,10 +9,8 @@ import os
 from prefect import flow, task, get_run_logger
 # %%
 
-
-
-best_model = "c2fec2fe0fd24fbe9580149770421bf0"
-logged_model = f"./1/{best_model}/artifacts/model"
+best_model = "285dda4dcdca4cccbac6e8a1f4959e33"
+logged_model = f"./mlruns/1/{best_model}/artifacts/model"
 model = mlflow.sklearn.load_model(logged_model)
 
 EVIDENTLY_SERVICE_ADDRESS = os.getenv('EVIDENTLY_SERVICE', 'http://127.0.0.1:5000')
@@ -28,10 +25,6 @@ db = mongo_client.get_database("prediction_service")
 collections = db.get_collection('data')
 
 
-from prefect.deployments import Deployment
-from prefect.orion.schemas.schedules import IntervalSchedule
-from prefect.flow_runners import SubprocessFlowRunner
-from datetime import timedelta
 
 @app.route('/predict', methods=['POST'])
 @flow
