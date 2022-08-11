@@ -25,6 +25,8 @@ services:
     networks:
       - back-tier
       - front-tier
+    volumes: 
+      - ./prediction_service/mlruns/:/services/prediction_service/mlruns/
   evidently_service:
     build:
       context: evidently_service

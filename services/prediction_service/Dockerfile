@@ -10,5 +10,4 @@ COPY [ "Pipfile", "Pipfile.lock", "./" ]
 RUN pipenv install --system --deploy
 
 COPY [ "predict.py", "./" ]
-COPY ["mlruns", "./"]
 ENTRYPOINT ["gunicorn", "--bind=0.0.0.0:9696", "predict:app" ]
