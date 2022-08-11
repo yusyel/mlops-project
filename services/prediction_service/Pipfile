@@ -10,7 +10,7 @@ gunicorn = "*"
 mlflow = "*"
 matplotlib = "*"
 pymongo = "*"
-prefect = "==2.0b10"
+prefect = "==2.0.4"
 
 [dev-packages]
 requests = "*"
