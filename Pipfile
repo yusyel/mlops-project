@@ -15,6 +15,11 @@ pyarrow = "*"
 [dev-packages]
 requests = "*"
 ipykernel = "*"
+pylint = "*"
+pytest = "*"
+black = "*"
+pre-commit = "*"
+
 
 [requires]
 python_version = "3.9"
