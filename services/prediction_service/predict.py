@@ -14,9 +14,13 @@ from prefect.task_runners import SequentialTaskRunner
 
 
 def load_model():
-    best_model = "285dda4dcdca4cccbac6e8a1f4959e33"
-    logged_model = f"/services/prediction_service/mlruns/1/{best_model}/artifacts/model"
-    model = mlflow.sklearn.load_model(logged_model)
+    mlflow.set_tracking_uri("sqlite:///mlflow.db")
+    model_name = "chd_risk_model"
+    stage = 'Production'
+
+    model = mlflow.sklearn.load_model(
+        model_uri=f"models:/{model_name}/{stage}"
+    )
     return model
 
 

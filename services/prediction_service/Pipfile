@@ -13,9 +13,7 @@ pymongo = "*"
 prefect = "==2.0.4"
 
 [dev-packages]
-requests = "*"
-ipykernel = "*"
-
+packaging = "*"
 
 [requires]
 python_version = "3.9"

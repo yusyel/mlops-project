@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "80196e5d084a3b6128106f5f2dfd4628c59063122852c916697976fae35028bb"
+            "sha256": "fb9f4962fe39a788a35819abc81e74cc6a2406f1ac0a319a82bbda0b33143345"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -50,11 +50,11 @@
         },
         "evidently": {
             "hashes": [
-                "sha256:08163a9ec2b313ad1e12b1b79b1bbd8b12c446e377266bec4c9de7551484fe10",
-                "sha256:a9de56612519924c568d780125637e902d2dd98d04e742a65a3e4479ebdef8d5"
+                "sha256:2f22882f6336938dd7c2d0db297303a7f416debb7e7ded07e803e97de058840f",
+                "sha256:fabf3f905572d710c889fdad7d053ffde7c4eac0a86c811e073631c56eadeb63"
             ],
             "index": "pypi",
-            "version": "==0.1.51.dev0"
+            "version": "==0.1.55.dev0"
         },
         "flask": {
             "hashes": [
@@ -217,11 +217,11 @@
         },
         "plotly": {
             "hashes": [
-                "sha256:9acf168915101caac82ed6da3390840c622d9d4e4a78cbe1260f52501efc3117",
-                "sha256:b0536e72bbc0b3cf169ac1fd00759d77aae7bb12ae378cdc75c5dc362f5de576"
+                "sha256:4d36d9859b7a153b273562deeed8c292587a472eb1fd57cd4158ec89d9defadb",
+                "sha256:989b13825cc974390aa0169479485d9257d37848a47bc63957251f8e1a7046ba"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==5.9.0"
+            "version": "==5.10.0"
         },
         "prometheus-client": {
             "hashes": [
@@ -281,10 +281,10 @@
         },
         "pytz": {
             "hashes": [
-                "sha256:1e760e2fe6a8163bc0b3d9a19c4f84342afa0a2affebfaa84b01b978a02ecaa7",
-                "sha256:e68985985296d9a66a881eb3193b0906246245294a881e7c8afe623866ac6a5c"
+                "sha256:220f481bdafa09c3955dfbdddb7b57780e9a94f5127e35456a48589b9e0c0197",
+                "sha256:cea221417204f2d1a2aa03ddae3e867921971d0d76f14d87abb4414415bbdcf5"
             ],
-            "version": "==2022.1"
+            "version": "==2022.2.1"
         },
         "pyyaml": {
             "hashes": [

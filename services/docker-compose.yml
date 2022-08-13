@@ -10,6 +10,19 @@ networks:
   back-tier:
 
 services:
+  training_service:
+    build:
+      context: training_service
+      dockerfile: Dockerfile
+    volumes:
+    - ./training_service/models/mlflow.db:/app/mlflow.db
+    - ./training_service/models/mlruns:/app/mlruns
+    depends_on:
+      - evidently_service
+      - mongo
+    networks:
+      - back-tier
+      - front-tier
   prediction_service:
     build:
       context: prediction_service
@@ -17,6 +30,10 @@ services:
     depends_on:
       - evidently_service
       - mongo
+    volumes:
+    - ./training_service/models/mlflow.db:/app/mlflow.db
+    - ./training_service/models/mlruns:/app/mlruns
+
     environment:
       EVIDENTLY_SERVICE: "http://evidently_service.:8085"
       MONGODB_ADDRESS: "mongodb://mongo.:27017/"
@@ -25,8 +42,6 @@ services:
     networks:
       - back-tier
       - front-tier
-    volumes: 
-      - ./prediction_service/mlruns/:/services/prediction_service/mlruns/
   evidently_service:
     build:
       context: evidently_service
@@ -51,7 +66,7 @@ services:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
     ports:
-      - "9091:9090"
+      - "9090:9090"
     networks:
       - back-tier
     restart: always
@@ -75,7 +90,7 @@ services:
   mongo:
     image: mongo
     ports:
-      - "27018:27017"
+      - "27017:27017"
     volumes:
       - mongo_data:/data/db
     networks:

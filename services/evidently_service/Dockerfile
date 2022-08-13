@@ -1,16 +1,27 @@
 # syntax=docker/dockerfile:1
+#RUN pip install -U pip
+#RUN pip install pipenv 
 
-FROM python:3.9.7-slim
+#WORKDIR /app
 
-RUN pip install -U pip
-RUN pip install pipenv 
+#COPY [ "Pipfile", "Pipfile.lock", "./" ]
+
+#RUN pipenv install --system --deploy --skip-lock
+#COPY [ "app.py", "./" ]
+
+#CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=8085"]
+
+FROM python:3.8-slim-buster
 
 WORKDIR /app
 
-COPY [ "Pipfile", "Pipfile.lock", "./" ]
+COPY requirements.txt requirements.txt
 
-RUN pipenv install --system --deploy
-COPY [ "app.py", "./" ]
+RUN pip3 install -r requirements.txt
+
+RUN pip3 install evidently==0.1.51.dev0
+
+COPY app.py .
 
 CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=8085"]
 
