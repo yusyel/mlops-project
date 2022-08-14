@@ -137,7 +137,7 @@ def register():
     df_train, df_val, y_train, y_val = split(df)
     train_dicts, X_train, val_dicts, X_val  = dicts(df_train, df_val, y_train, y_val)
     best_model = train_models(train_dicts, y_train, val_dicts, y_val)
-    
+
     model =    mlflow.register_model(model_uri=f"runs:/{best_model}/model", name="chd_risk_model")
     client.transition_model_version_stage(
         name="chd_risk_model",
@@ -147,6 +147,4 @@ def register():
     logger.info(f"Training is done! {model}")
 
     return model
-
-
 register()
