@@ -1,5 +1,4 @@
 prepare_env:
-	pipenv install --dev
 
 quality_cheks:
 	pipenv shell
