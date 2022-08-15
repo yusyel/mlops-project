@@ -1,4 +1,8 @@
+prepare_env:
+	pipenv install --dev
+
 quality_cheks:
+	pipenv shell
 	isort ./services/training_service
 	isort ./services/prediction_service
 	isort ./services/evidently_service
@@ -18,8 +22,10 @@ prepare_db:
 	echo database is cleaned
 
 
+
+
 build-docker-containers:
 	 docker-compose up
 
 
-build : quality_cheks prepare_db build-docker-containers
+build : prepare_env quality_cheks prepare_db build-docker-containers
