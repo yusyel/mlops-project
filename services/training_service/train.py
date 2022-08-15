@@ -59,15 +59,11 @@ def split(df):
 
 
 @task(name="prepare_dicts")
-def dicts(df_train, df_val, y_train, y_val):
+def dicts(df_train, df_val)
     train_dicts = df_train.to_dict(orient="records")
-    dv = DictVectorizer(sparse=False)
-    X_train = dv.fit_transform(train_dicts)
 
     val_dicts = df_val.to_dict(orient="records")
-    dv = DictVectorizer(sparse=False)
-    X_val = dv.fit_transform(val_dicts)
-    return train_dicts, X_train, val_dicts, X_val
+    return train_dicts, val_dicts
 
 
 @task(name="train_models")
@@ -149,7 +145,7 @@ def register():
 
     df = read(path="./framingham.csv")
     df_train, df_val, y_train, y_val = split(df)
-    train_dicts, X_train, val_dicts, X_val = dicts(df_train, df_val, y_train, y_val)
+    train_dicts, val_dicts, = dicts(df_train, df_val, y_train, y_val)
     best_model = train_models(train_dicts, y_train, val_dicts, y_val)
     logger.info(f"best model run id is: {best_model}")
     model = mlflow.register_model(
