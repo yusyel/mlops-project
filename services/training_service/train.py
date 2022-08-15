@@ -1,9 +1,7 @@
 # # 1. Data Data Preparation
 #%%
-import os
 import shutil
 from pathlib import Path
-from distutils.command.clean import clean
 
 import numpy as np
 import mlflow
@@ -16,7 +14,6 @@ from mlflow.tracking import MlflowClient
 from sklearn.metrics import f1_score, roc_auc_score, accuracy_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import make_pipeline
-from prefect.deployments import Deployment
 from prefect.task_runners import SequentialTaskRunner
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction import DictVectorizer
@@ -59,7 +56,7 @@ def split(df):
 
 
 @task(name="prepare_dicts")
-def dicts(df_train, df_val)
+def dicts(df_train, df_val):
     train_dicts = df_train.to_dict(orient="records")
 
     val_dicts = df_val.to_dict(orient="records")
@@ -103,9 +100,7 @@ def train_models(train_dicts, y_train, val_dicts, y_val):
         "min_samples_split": hp.uniform("min_samples_split", 0, 1),
         "n_estimators": scope.int(hp.quniform("n_estimators", 1, 2000, 1)),
         "max_leaf_nodes": scope.int(hp.quniform("max_leaf_nodes", 2, 1000, 1)),
-        "class_weight": hp.choice(
-            "class_weight", ["balanced", "balanced_subsample", None]
-        ),
+        "class_weight": hp.choice("class_weight", ["balanced", "balanced_subsample", None]),
         "ccp_alpha": hp.uniform("ccp_alpha", 0, 1),
     }
 
@@ -145,15 +140,14 @@ def register():
 
     df = read(path="./framingham.csv")
     df_train, df_val, y_train, y_val = split(df)
-    train_dicts, val_dicts, = dicts(df_train, df_val, y_train, y_val)
+    (
+        train_dicts,
+        val_dicts,
+    ) = dicts(df_train, df_val, y_train, y_val)
     best_model = train_models(train_dicts, y_train, val_dicts, y_val)
     logger.info(f"best model run id is: {best_model}")
-    model = mlflow.register_model(
-        model_uri=f"runs:/{best_model}/model", name="chd_risk_model"
-    )
-    client.transition_model_version_stage(
-        name="chd_risk_model", version=1, stage="Production"
-    )
+    model = mlflow.register_model(model_uri=f"runs:/{best_model}/model", name="chd_risk_model")
+    client.transition_model_version_stage(name="chd_risk_model", version=1, stage="Production")
     logger.info(f"Training is done! {model}")
 
     return model

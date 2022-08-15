@@ -9,32 +9,32 @@ The service gets a reference dataset from reference.csv file and process current
 
 Metrics calculation results are available with `GET /metrics` HTTP method in Prometheus compatible format.
 """
-import os
+import dataclasses
+import datetime
 import hashlib
 import logging
-import datetime
-import dataclasses
+import os
 from typing import Dict, List, Optional
 
-import yaml
 import flask
 import pandas as pd
 import prometheus_client
-from flask import Flask
-from pyarrow import parquet as pq
-from evidently.runner.loader import DataLoader, DataOptions
+import yaml
 from evidently.model_monitoring import (
-    ModelMonitoring,
+    CatTargetDriftMonitor,
+    ClassificationPerformanceMonitor,
     DataDriftMonitor,
     DataQualityMonitor,
-    CatTargetDriftMonitor,
+    ModelMonitoring,
     NumTargetDriftMonitor,
-    RegressionPerformanceMonitor,
-    ClassificationPerformanceMonitor,
     ProbClassificationPerformanceMonitor,
+    RegressionPerformanceMonitor,
 )
-from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from evidently.pipeline.column_mapping import ColumnMapping
+from evidently.runner.loader import DataLoader, DataOptions
+from flask import Flask
+from pyarrow import parquet as pq
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
 app = Flask(__name__)
 

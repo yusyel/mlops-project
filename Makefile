@@ -1,7 +1,6 @@
 prepare_env:
 
 quality_cheks:
-	pipenv shell
 	isort ./services/training_service
 	isort ./services/prediction_service
 	isort ./services/evidently_service
