@@ -20,9 +20,10 @@ requests = "*"
 ipykernel = "*"
 pylint = "*"
 pytest = "*"
-black = "*"
+black = {extras = ["jupyter"], version = "*"}
 pre-commit = "*"
 isort = "*"
+install = "*"
 
 [requires]
 python_version = "3.9"

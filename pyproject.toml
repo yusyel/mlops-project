@@ -5,7 +5,10 @@ disable = [
     "invalid-name",
     "unused-argument",
     "unused-variable",
-    "ungrouped-imports"
+    "ungrouped-imports",
+    "too-many-function-args",
+    "redefined-outer-name",
+    "unused-import"
 ]
 
 [tool.black]

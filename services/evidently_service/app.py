@@ -9,32 +9,32 @@ The service gets a reference dataset from reference.csv file and process current
 
 Metrics calculation results are available with `GET /metrics` HTTP method in Prometheus compatible format.
 """
-import dataclasses
-import datetime
+import os
 import hashlib
 import logging
-import os
+import datetime
+import dataclasses
 from typing import Dict, List, Optional
 
+import yaml
 import flask
 import pandas as pd
 import prometheus_client
-import yaml
-from evidently.model_monitoring import (
-    CatTargetDriftMonitor,
-    ClassificationPerformanceMonitor,
-    DataDriftMonitor,
-    DataQualityMonitor,
-    ModelMonitoring,
-    NumTargetDriftMonitor,
-    ProbClassificationPerformanceMonitor,
-    RegressionPerformanceMonitor,
-)
-from evidently.pipeline.column_mapping import ColumnMapping
-from evidently.runner.loader import DataLoader, DataOptions
 from flask import Flask
 from pyarrow import parquet as pq
+from evidently.runner.loader import DataLoader, DataOptions
+from evidently.model_monitoring import (
+    ModelMonitoring,
+    DataDriftMonitor,
+    DataQualityMonitor,
+    CatTargetDriftMonitor,
+    NumTargetDriftMonitor,
+    RegressionPerformanceMonitor,
+    ClassificationPerformanceMonitor,
+    ProbClassificationPerformanceMonitor,
+)
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
+from evidently.pipeline.column_mapping import ColumnMapping
 
 app = Flask(__name__)
 
@@ -45,9 +45,7 @@ logging.basicConfig(
 )
 
 # Add prometheus wsgi middleware to route /metrics requests
-app.wsgi_app = DispatcherMiddleware(
-    app.wsgi_app, {"/metrics": prometheus_client.make_wsgi_app()}
-)
+app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {"/metrics": prometheus_client.make_wsgi_app()})
 
 
 @dataclasses.dataclass
@@ -103,9 +101,7 @@ class MonitoringService:
         for dataset_info in datasets.values():
             self.reference[dataset_info.name] = dataset_info.references
             self.monitoring[dataset_info.name] = ModelMonitoring(
-                monitors=[
-                    EVIDENTLY_MONITORS_MAPPING[k]() for k in dataset_info.monitors
-                ],
+                monitors=[EVIDENTLY_MONITORS_MAPPING[k]() for k in dataset_info.monitors],
                 options=[],
             )
             self.column_mapping[dataset_info.name] = dataset_info.column_mapping
@@ -118,9 +114,7 @@ class MonitoringService:
         window_size = self.window_size
 
         if dataset_name in self.current:
-            current_data = self.current[dataset_name].append(
-                new_rows, ignore_index=True
-            )
+            current_data = self.current[dataset_name].append(new_rows, ignore_index=True)
 
         else:
             current_data = new_rows
@@ -129,18 +123,13 @@ class MonitoringService:
 
         if current_size > self.window_size:
             # cut current_size by window size value
-            current_data.drop(
-                index=list(range(0, current_size - self.window_size)), inplace=True
-            )
+            current_data.drop(index=list(range(0, current_size - self.window_size)), inplace=True)
             current_data.reset_index(drop=True, inplace=True)
 
         self.current[dataset_name] = current_data
 
         if current_size < window_size:
-            logging.info(
-                f"Not enough data for measurement: {current_size} of {window_size}."
-                f" Waiting more data"
-            )
+            logging.info(f"Not enough data for measurement: {current_size} of {window_size}." f" Waiting more data")
             return
 
         next_run_time = self.next_run_time.get(dataset_name)
@@ -171,9 +160,7 @@ class MonitoringService:
                 continue
 
             if found is None:
-                found = prometheus_client.Gauge(
-                    metric_key, "", list(sorted(labels.keys()))
-                )
+                found = prometheus_client.Gauge(metric_key, "", list(sorted(labels.keys())))
                 self.metrics[metric_key] = found
 
             try:
@@ -191,16 +178,12 @@ SERVICE: Optional[MonitoringService] = None
 def configure_service():
     # pylint: disable=global-statement
     global SERVICE
-    config_file_path = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), "config.yaml"
-    )
+    config_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.yaml")
 
     # try to find a config file, it should be generated via the data preparation script
     if not os.path.exists(config_file_path):
         logging.error("File %s does not exist", config_file_path)
-        exit(
-            "Cannot find a config file for the metrics service. Try to check README.md for setup instructions."
-        )
+        exit("Cannot find a config file for the metrics service. Try to check README.md for setup instructions.")
 
     with open(config_file_path, "rb") as config_file:
         config = yaml.safe_load(config_file)
@@ -210,9 +193,7 @@ def configure_service():
 
     for dataset_name, dataset_options in config["datasets"].items():
         reference_file = dataset_options["reference_file"]
-        logging.info(
-            f"Load reference data for dataset {dataset_name} from {reference_file}"
-        )
+        logging.info(f"Load reference data for dataset {dataset_name} from {reference_file}")
         reference_data = pq.read_table(reference_file).to_pandas()
         datasets[dataset_name] = LoadedDataset(
             name=dataset_name,

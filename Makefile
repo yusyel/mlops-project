@@ -27,3 +27,4 @@ build-docker-containers:
 
 
 build : prepare_env quality_cheks prepare_db build-docker-containers
+

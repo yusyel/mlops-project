@@ -1,0 +1,1 @@
+{"buildTargets":["build","build-docker-containers","make","prepare_db","prepare_env","quality_cheks"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}
