@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 pyarrow = "*"
-prefect = "==2.0b10"
+requests = "*"
 
 [dev-packages]
 

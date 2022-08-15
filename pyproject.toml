@@ -1,0 +1,39 @@
+[tool.pylint.messages_control]
+disable = [
+    "missing-function-docstring",
+    "missing-module-docstring",
+    "invalid-name",
+    "unused-import",
+    "redefined-outer-name",
+    "logging-fstring-interpolation",
+    "line-too-long",
+    "import-error",
+    "missing-class-docstring",
+    "logging-too-many-args",
+    "too-few-public-methods",
+    "global-variable-not-assigned",
+    "consider-using-sys-exit",
+    "missing-function-docstring",
+    "missing-module-docstring",
+    "invalid-name",
+    "unused-import",
+    "redefined-outer-name",
+    "wrong-import-order",
+    "unused-variable",
+    "import-error",
+    "missing-module-docstring",
+    "missing-function-docstring",
+    "invalid-name",
+    "unused-argument",
+    "unused-variable",
+    "ungrouped-imports"
+]
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+skip-string-normalization = true
+
+[tool.isort]
+multi_line_output = 3
+length_sort = true

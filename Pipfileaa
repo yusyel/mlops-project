@@ -13,6 +13,7 @@ matplotlib = "*"
 pyarrow = "*"
 setuptools = "*"
 prefect = "==2.0.4"
+pymongo = "*"
 
 [dev-packages]
 requests = "*"
@@ -21,6 +22,7 @@ pylint = "*"
 pytest = "*"
 black = "*"
 pre-commit = "*"
+isort = "*"
 
 [requires]
 python_version = "3.9"

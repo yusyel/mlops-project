@@ -1,29 +1,31 @@
 # # 1. Data Data Preparation
 #%%
-import pandas as pd
-import numpy as np
+import os
+import shutil
+from pathlib import Path
+from distutils.command.clean import clean
 
-from prefect import flow, task, get_run_logger
-from prefect.task_runners import SequentialTaskRunner
+import numpy as np
 import mlflow
-from sklearn.feature_extraction import DictVectorizer
-from hyperopt import fmin, tpe, hp, STATUS_OK, Trials
+import pandas as pd
+from prefect import flow, task, get_run_logger
+from hyperopt import STATUS_OK, Trials, hp, tpe, fmin
 from hyperopt.pyll import scope
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import roc_auc_score
-from sklearn.metrics import roc_curve
-from sklearn.metrics import f1_score
-from sklearn.model_selection import train_test_split
-from sklearn.pipeline import make_pipeline
 from mlflow.entities import ViewType
 from mlflow.tracking import MlflowClient
-
+from sklearn.metrics import f1_score, roc_auc_score, accuracy_score
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.pipeline import make_pipeline
+from prefect.deployments import Deployment
+from prefect.task_runners import SequentialTaskRunner
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction import DictVectorizer
 
 mlflow.set_tracking_uri("sqlite:///mlflow.db")
 mlflow.set_experiment("mlops-project")
 client = MlflowClient(tracking_uri="sqlite:///mlflow.db")
 client.list_experiments()
+
 
 @task(name="read_data")
 def read(path):
@@ -43,7 +45,7 @@ def read(path):
 def split(df):
     df_full_train, df_test = train_test_split(df, test_size=0.2, random_state=1)
     df_train, df_val = train_test_split(df_full_train, test_size=0.25, random_state=1)
-    #return len(df_train), len(df_val), len(df_test)
+    # return len(df_train), len(df_val), len(df_test)
     df_train = df_train.reset_index(drop=True)
     df_val = df_val.reset_index(drop=True)
     df_test = df_test.reset_index(drop=True)
@@ -67,9 +69,9 @@ def dicts(df_train, df_val, y_train, y_val):
     X_val = dv.fit_transform(val_dicts)
     return train_dicts, X_train, val_dicts, X_val
 
+
 @task(name="train_models")
 def train_models(train_dicts, y_train, val_dicts, y_val):
-    logger = get_run_logger()
     def objective(space):
         with mlflow.start_run():
             mlflow.set_tag("mlops", "model1")
@@ -105,7 +107,9 @@ def train_models(train_dicts, y_train, val_dicts, y_val):
         "min_samples_split": hp.uniform("min_samples_split", 0, 1),
         "n_estimators": scope.int(hp.quniform("n_estimators", 1, 2000, 1)),
         "max_leaf_nodes": scope.int(hp.quniform("max_leaf_nodes", 2, 1000, 1)),
-        "class_weight": hp.choice("class_weight", ["balanced", "balanced_subsample", None]),
+        "class_weight": hp.choice(
+            "class_weight", ["balanced", "balanced_subsample", None]
+        ),
         "ccp_alpha": hp.uniform("ccp_alpha", 0, 1),
     }
 
@@ -127,24 +131,36 @@ def train_models(train_dicts, y_train, val_dicts, y_val):
     )[0]
 
     best_model = best.info.run_id
-    logger.info(f"best model run id is:{best_model}")
     return best_model
+
+
+@task(name="clean path")
+def clean_path(path_mlruns):
+    path_dir = Path(path_mlruns)
+    if path_dir.is_dir():
+        shutil.rmtree(path_dir)
+
 
 @flow(task_runner=SequentialTaskRunner())
 def register():
+    clean_path(path_mlruns="./mlruns/1")
+    client.list_experiments()
     logger = get_run_logger()
+
     df = read(path="./framingham.csv")
     df_train, df_val, y_train, y_val = split(df)
-    train_dicts, X_train, val_dicts, X_val  = dicts(df_train, df_val, y_train, y_val)
+    train_dicts, X_train, val_dicts, X_val = dicts(df_train, df_val, y_train, y_val)
     best_model = train_models(train_dicts, y_train, val_dicts, y_val)
-
-    model =    mlflow.register_model(model_uri=f"runs:/{best_model}/model", name="chd_risk_model")
+    logger.info(f"best model run id is: {best_model}")
+    model = mlflow.register_model(
+        model_uri=f"runs:/{best_model}/model", name="chd_risk_model"
+    )
     client.transition_model_version_stage(
-        name="chd_risk_model",
-        version=1,
-        stage="Production"
+        name="chd_risk_model", version=1, stage="Production"
     )
     logger.info(f"Training is done! {model}")
 
     return model
+
+
 register()

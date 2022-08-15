@@ -12,11 +12,11 @@ networks:
 services:
   training_service:
     build:
-      context: training_service
+      context: ./services/training_service
       dockerfile: Dockerfile
     volumes:
-    - ./training_service/models/mlflow.db:/app/mlflow.db
-    - ./training_service/models/mlruns:/app/mlruns
+    - ./services/training_service/models/mlflow.db:/app/mlflow.db
+    - ./services/training_service/models/mlruns:/app/mlruns
     depends_on:
       - evidently_service
       - mongo
@@ -25,14 +25,14 @@ services:
       - front-tier
   prediction_service:
     build:
-      context: prediction_service
+      context: ./services/prediction_service
       dockerfile: Dockerfile
     depends_on:
       - evidently_service
       - mongo
     volumes:
-    - ./training_service/models/mlflow.db:/app/mlflow.db
-    - ./training_service/models/mlruns:/app/mlruns
+    - ./services/training_service/models/mlflow.db:/app/mlflow.db
+    - ./services/training_service/models/mlruns:/app/mlruns
 
     environment:
       EVIDENTLY_SERVICE: "http://evidently_service.:8085"
@@ -44,13 +44,13 @@ services:
       - front-tier
   evidently_service:
     build:
-      context: evidently_service
+      context: ./services/evidently_service
       dockerfile: Dockerfile
     depends_on:
       - grafana
     volumes:
-      - ./evidently_service/datasets:/app/datasets
-      - ./evidently_service/config.yaml:/app/config.yaml
+      - ./services/evidently_service/datasets:/app/datasets
+      - ./services/evidently_service/config.yaml:/app/config.yaml
     ports:
       - "8085:8085"
     networks:
@@ -60,7 +60,7 @@ services:
   prometheus:
     image: prom/prometheus
     volumes:
-      - ./evidently_service/config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./services/evidently_service/config/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -79,9 +79,9 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./evidently_service/config/grafana_datasources.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
-      - ./evidently_service/config/grafana_dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
-      - ./evidently_service/dashboards:/opt/grafana/dashboards
+      - ./services/evidently_service/config/grafana_datasources.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
+      - ./services/evidently_service/config/grafana_dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
+      - ./services/evidently_service/dashboards:/opt/grafana/dashboards
       - grafana_data:/var/lib/grafana
     networks:
       - back-tier

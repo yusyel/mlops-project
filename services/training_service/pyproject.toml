@@ -1,13 +1,11 @@
 [tool.pylint.messages_control]
 disable = [
-    "missing-function-docstring",
     "missing-module-docstring",
+    "missing-function-docstring",
     "invalid-name",
-    "unused-import",
-    "redefined-outer-name",
-    "wrong-import-order",
+    "unused-argument",
     "unused-variable",
-    "import-error"
+    "ungrouped-imports"
 ]
 
 [tool.black]
