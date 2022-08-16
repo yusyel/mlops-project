@@ -8,5 +8,3 @@ COPY [ "train.py", "framingham.csv", "./" ]
 COPY [ "Pipfile", "Pipfile.lock", "./" ]
 
 RUN pipenv install --system --deploy
-
-CMD [ "python3", "-m" , "train"]

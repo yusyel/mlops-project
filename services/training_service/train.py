@@ -140,10 +140,7 @@ def register():
 
     df = read(path="./framingham.csv")
     df_train, df_val, y_train, y_val = split(df)
-    (
-        train_dicts,
-        val_dicts,
-    ) = dicts(df_train, df_val, y_train, y_val)
+    train_dicts, val_dicts = dicts(df_train, df_val)
     best_model = train_models(train_dicts, y_train, val_dicts, y_val)
     logger.info(f"best model run id is: {best_model}")
     model = mlflow.register_model(model_uri=f"runs:/{best_model}/model", name="chd_risk_model")
