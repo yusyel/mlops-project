@@ -26,14 +26,14 @@ def load_model():
 
 
 app = Flask("chd")
-MONGODB_ADDRESS = os.getenv("MONGODB_ADDRESS", "mongodb://127.0.0.1:27017")
-mongo_client = MongoClient(MONGODB_ADDRESS)
-db = mongo_client.get_database("prediction_service")
-collections = db.get_collection("data")
 
 
 @task
 def save_to_db(record, prediction):
+    MONGODB_ADDRESS = os.getenv("MONGODB_ADDRESS", "mongodb://127.0.0.1:27017")
+    mongo_client = MongoClient(MONGODB_ADDRESS)
+    db = mongo_client.get_database("prediction_service")
+    collections = db.get_collection("data")
     rec = record.copy()
     rec["prediction"] = prediction
     collections.insert_one(rec)
