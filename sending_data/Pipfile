@@ -4,15 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-scikit-learn = "==1.0.2"
-flask = "*"
-gunicorn = "*"
-mlflow = "*"
-matplotlib = "*"
-pymongo = "*"
+pyarrow = "*"
 prefect = "==2.0.4"
+requests = "*"
+urllib3 = "*"
 
 [dev-packages]
+
 
 [requires]
 python_version = "3.9"

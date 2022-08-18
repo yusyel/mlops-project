@@ -14,6 +14,7 @@ pyarrow = "*"
 setuptools = "*"
 prefect = "==2.0.4"
 pymongo = "*"
+numpy = "*"
 
 [dev-packages]
 requests = "*"

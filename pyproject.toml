@@ -8,7 +8,16 @@ disable = [
     "ungrouped-imports",
     "too-many-function-args",
     "redefined-outer-name",
-    "unused-import"
+    "unused-import",
+    "global-variable-not-assigned",
+    "line-too-long",
+    "import-error",
+    "logging-fstring-interpolation",
+    "logging-too-many-args",
+    "missing-class-docstring",
+    "too-few-public-methods",
+    "consider-using-sys-exit"
+
 ]
 
 [tool.black]

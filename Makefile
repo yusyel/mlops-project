@@ -1,5 +1,3 @@
-prepare_env:
-
 quality_cheks:
 	isort ./services/training_service
 	isort ./services/prediction_service
@@ -11,7 +9,7 @@ quality_cheks:
 
 	pylint --recursive=y ./services/training_service
 	pylint --recursive=y ./services/prediction_service
-	pylint --recursive=y ./services/prediction_service
+	pylint --recursive=y ./services/evidently_service
 
 prepare_db:
 	rm ./services/training_service/models/mlflow.db
@@ -23,8 +21,7 @@ prepare_db:
 
 
 build-docker-containers:
-	 docker-compose up
+	 docker-compose up --force-recreate --build
 
 
-build : prepare_env quality_cheks prepare_db build-docker-containers
-
+build : quality_cheks prepare_db build-docker-containers

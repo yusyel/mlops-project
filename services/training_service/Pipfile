@@ -10,9 +10,9 @@ pandas = "*"
 hyperopt = "*"
 pathlib = "*"
 prefect = "==2.0.4"
+numpy = "*"
 
 [dev-packages]
-packaging = "*"
 
 [requires]
 python_version = "3.9"

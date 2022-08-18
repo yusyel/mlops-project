@@ -23,6 +23,7 @@ services:
     networks:
       - back-tier
       - front-tier
+
   prediction_service:
     build:
       context: ./services/prediction_service
@@ -33,7 +34,6 @@ services:
     volumes:
     - ./services/training_service/models/mlflow.db:/app/mlflow.db
     - ./services/training_service/models/mlruns:/app/mlruns
-
     environment:
       EVIDENTLY_SERVICE: "http://evidently_service.:8085"
       MONGODB_ADDRESS: "mongodb://mongo.:27017/"
@@ -42,6 +42,7 @@ services:
     networks:
       - back-tier
       - front-tier
+
   evidently_service:
     build:
       context: ./services/evidently_service
@@ -87,6 +88,7 @@ services:
       - back-tier
       - front-tier
     restart: always
+
   mongo:
     image: mongo
     ports:

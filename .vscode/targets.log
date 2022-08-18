@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Aug 16 05:50:31 2022
+# Make data base, printed on Thu Aug 18 02:53:36 2022
 
 # Variables
 
@@ -18,10 +18,6 @@ GDK_BACKEND = x11
 LC_ALL = C
 # environment
 SSH_AGENT_LAUNCHER = openssh
-# environment
-VIRTUAL_ENV = /home/yusuf/.local/share/virtualenvs/mlops-project-6A3P8l_K
-# environment
-PIP_PYTHON_PATH = /usr/bin/python3
 # environment
 VSCODE_CWD = /home/yusuf/okul/mlops-project
 # environment
@@ -41,11 +37,7 @@ PWD = /home/yusuf/okul/mlops-project
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
-PS1 = \[\e[38;5;0m\]\[\e[48;5;35m\] mlops-project-6A3P8l_K \[\e[48;5;240m\]\[\e[38;5;35m\]\[\e[0m\]\[\e[38;5;250m\]\[\e[48;5;240m\] yusuf \[\e[48;5;238m\]\[\e[38;5;240m\]\[\e[0m\]\[\e[38;5;250m\]\[\e[48;5;238m\] thinkpad \[\e[48;5;31m\]\[\e[38;5;238m\]\[\e[0m\]\[\e[38;5;15m\]\[\e[48;5;31m\] ~ \[\e[48;5;237m\]\[\e[38;5;31m\]\[\e[0m\]\[\e[38;5;250m\]\[\e[48;5;237m\] okul \[\e[48;5;237m\]\[\e[38;5;244m\]\[\e[0m\]\[\e[38;5;254m\]\[\e[48;5;237m\] mlops-project \[\e[48;5;148m\]\[\e[38;5;237m\]\[\e[0m\]\[\e[38;5;0m\]\[\e[48;5;148m\]  main \[\e[48;5;236m\]\[\e[38;5;148m\]\[\e[0m\]\[\e[38;5;15m\]\[\e[48;5;236m\] \$ \[\e[0m\]\[\e[38;5;236m\]\[\e[0m\]
-# environment
 XDG_DATA_DIRS = /home/yusuf/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/
-# environment
-OLDPWD = /home/yusuf/okul
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # automatic
@@ -53,17 +45,15 @@ OLDPWD = /home/yusuf/okul
 # environment
 VSCODE_CODE_CACHE_PATH = /home/yusuf/.config/Code/CachedData/6d9b74a70ca9c7733b29f0456fd8195364076dda
 # environment
-PIP_DISABLE_PIP_VERSION_CHECK = 1
-# environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.W8N5Q1
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.5YESQ1
 # default
 .LOADED :=
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.2750
+GNOME_TERMINAL_SERVICE = :1.1141
 # makefile
 MAKEFLAGS = pqrR
 # makefile
@@ -89,7 +79,7 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 392968
+VSCODE_PID = 196201
 # environment
 MOZ_ENABLE_WAYLAND = 1
 # environment
@@ -97,7 +87,7 @@ XDG_SESSION_TYPE = wayland
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/thinkpad:@/tmp/.ICE-unix/194207,unix/thinkpad:/tmp/.ICE-unix/194207
+SESSION_MANAGER = local/thinkpad:@/tmp/.ICE-unix/2974,unix/thinkpad:/tmp/.ICE-unix/2974
 # automatic
 *F = $(notdir $*)
 # environment
@@ -119,15 +109,15 @@ MAKECMDGOALS := all
 # environment
 XMODIFIERS = @im=ibus
 # environment
-SHLVL = 2
+SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/1f2d067c_ef4e_4295_86ee_ddee84830b0e
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/ae4f0643_a7aa_4f82_a0dc_c64211753f2e
 # environment
 MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = /home/yusuf/.local/share/virtualenvs/mlops-project-6A3P8l_K/bin:/home/yusuf/bin:/home/yusuf/bin:/home/yusuf/.local/bin:/home/yusuf/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+PATH = /home/yusuf/bin:/home/yusuf/.local/bin:/home/yusuf/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
 # default
 MAKEFILES :=
 # automatic
@@ -153,9 +143,7 @@ GNUMAKEFLAGS :=
 # environment
 LOGNAME = yusuf
 # makefile
-.DEFAULT_GOAL := prepare_env
-# environment
-PYTHONDONTWRITEBYTECODE = 1
+.DEFAULT_GOAL := quality_cheks
 # environment
 DISPLAY = :0
 # environment
@@ -191,8 +179,6 @@ TERM = xterm-256color
 # default
 SUFFIXES :=
 # environment
-PIPENV_ACTIVE = 1
-# environment
 VSCODE_CLI = 1
 # environment
 ELECTRON_NO_ATTACH_CONSOLE = 1
@@ -205,7 +191,7 @@ XDG_MENU_PREFIX = gnome-
 # environment
 GDMSESSION = gnome
 # variable set hash-table stats:
-# Load=96/1024=9%, Rehash=0, Collisions=10/126=8%
+# Load=89/1024=9%, Rehash=0, Collisions=10/119=8%
 
 # Pattern-specific Variable Values
 
@@ -213,7 +199,7 @@ GDMSESSION = gnome
 
 # Directories
 
-# . (device 42, inode 12720355): 16 files, no impossibilities.
+# . (device 42, inode 12945953): 16 files, no impossibilities.
 
 # 16 files, no impossibilities in 1 directories.
 
@@ -227,7 +213,7 @@ prepare_db:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 17):
+#  recipe to execute (from 'Makefile', line 15):
 	rm ./services/training_service/models/mlflow.db
 	echo databased removed
 	touch ./services/training_service/models/mlflow.db
@@ -236,20 +222,15 @@ prepare_db:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-16 05:50:19.248810537
+#  Last modified 2022-08-18 01:53:10.185383354
 #  File has been updated.
 #  Successfully updated.
-
-prepare_env:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 quality_cheks:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 4):
+#  recipe to execute (from 'Makefile', line 2):
 	isort ./services/training_service
 	isort ./services/prediction_service
 	isort ./services/evidently_service
@@ -258,13 +239,13 @@ quality_cheks:
 	black ./services/evidently_service
 	pylint --recursive=y ./services/training_service
 	pylint --recursive=y ./services/prediction_service
-	pylint --recursive=y ./services/prediction_service
+	pylint --recursive=y ./services/evidently_service
 
 build-docker-containers:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 26):
+#  recipe to execute (from 'Makefile', line 24):
 	 docker-compose up
 
 # Not a target:
@@ -277,27 +258,26 @@ build-docker-containers:
 all:
 #  Command line target.
 #  Implicit rule search has been done.
-
 #  File does not exist.
 #  File has not been updated.
 
-build: prepare_env quality_cheks prepare_db build-docker-containers
+build: quality_cheks prepare_db build-docker-containers
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=9/1024=1%, Rehash=0, Collisions=0/23=0%
+# Load=8/1024=1%, Rehash=0, Collisions=0/21=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 26 / storage = 307 B / avg = 11 B
-# current buf: size = 8162 B / used = 307 B / count = 26 / avg = 11 B
+# strcache buffers: 1 (0) / strings = 25 / storage = 295 B / avg = 11 B
+# current buf: size = 8162 B / used = 295 B / count = 25 / avg = 11 B
 
-# strcache performance: lookups = 39 / hit rate = 33%
+# strcache performance: lookups = 36 / hit rate = 30%
 # hash-table stats:
-# Load=26/8192=0%, Rehash=0, Collisions=0/39=0%
-# Finished Make data base on Tue Aug 16 05:50:31 2022
+# Load=25/8192=0%, Rehash=0, Collisions=0/36=0%
+# Finished Make data base on Thu Aug 18 02:53:36 2022

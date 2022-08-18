@@ -3,7 +3,7 @@
 import shutil
 from pathlib import Path
 
-import numpy as np
+import numpy
 import mlflow
 import pandas as pd
 from prefect import flow, task, get_run_logger
@@ -104,7 +104,7 @@ def train_models(train_dicts, y_train, val_dicts, y_val):
         "ccp_alpha": hp.uniform("ccp_alpha", 0, 1),
     }
 
-    rstate = np.random.default_rng(2)
+    rstate = numpy.random.default_rng(2)
     params = fmin(
         fn=objective,
         space=space,
