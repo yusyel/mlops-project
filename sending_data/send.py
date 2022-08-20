@@ -9,7 +9,6 @@ from prefect import flow, task, get_run_logger
 #%%
 
 
-@task(name="read data")
 def read(path):
     table = pq.read_table(path)
     data = table.to_pylist()
@@ -24,7 +23,6 @@ class DateTimeEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, o)
 
 
-@task
 def send(data):
     with open("target.csv", "w", encoding="utf-8") as f_target:
         for row in data:
@@ -38,12 +36,10 @@ def send(data):
             ).json()
 
 
-@flow(name="flow")
+
 def main():
-    logger = get_run_logger()
     data = read(path="./output.parquet")
     response = send(data)
-    logger.info(f"response is {response}")
 
 
 main()

@@ -10,3 +10,4 @@ pylint --recursive=y ./services/training_service
 pylint --recursive=y ./services/prediction_service
 pylint --recursive=y ./services/evidently_service
 make: Leaving directory '/home/yusuf/okul/mlops-project'
+ 

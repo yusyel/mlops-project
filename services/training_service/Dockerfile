@@ -1,7 +1,6 @@
 FROM python:3.9.7-slim
 
-RUN pip install packaging
-RUN python3 -m pip install --upgrade pip
+RUN pip install --upgrade pip
 RUN pip install pipenv
 WORKDIR /app
 COPY ["train.py", "framingham.csv", "./" ]

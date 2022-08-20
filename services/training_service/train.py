@@ -18,10 +18,13 @@ from prefect.task_runners import SequentialTaskRunner
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction import DictVectorizer
 
-mlflow.set_tracking_uri("sqlite:///mlflow.db")
-mlflow.set_experiment("mlops-project")
-client = MlflowClient(tracking_uri="sqlite:///mlflow.db")
-client.list_experiments()
+
+@task(name="prepare mlflow")
+def prepare_mlflow(path_db, name):
+    mlflow.set_tracking_uri(path_db)
+    mlflow.set_experiment(name)
+    client = MlflowClient(tracking_uri=path_db)
+    return client
 
 
 @task(name="read_data")
@@ -64,7 +67,7 @@ def dicts(df_train, df_val):
 
 
 @task(name="train_models")
-def train_models(train_dicts, y_train, val_dicts, y_val):
+def train_models(train_dicts, y_train, val_dicts, y_val, client):
     def objective(space):
         with mlflow.start_run():
             mlflow.set_tag("mlops", "model1")
@@ -134,6 +137,7 @@ def clean_path(path_mlruns):
 
 @flow(task_runner=SequentialTaskRunner())
 def register():
+    client = prepare_mlflow(path_db="sqlite:///mlflow.db", name="mlflow-project")
     clean_path(path_mlruns="./mlruns/1")
     client.list_experiments()
     logger = get_run_logger()
@@ -141,7 +145,7 @@ def register():
     df = read(path="./framingham.csv")
     df_train, df_val, y_train, y_val = split(df)
     train_dicts, val_dicts = dicts(df_train, df_val)
-    best_model = train_models(train_dicts, y_train, val_dicts, y_val)
+    best_model = train_models(train_dicts, y_train, val_dicts, y_val, client)
     logger.info(f"best model run id is: {best_model}")
     model = mlflow.register_model(model_uri=f"runs:/{best_model}/model", name="chd_risk_model")
     client.transition_model_version_stage(name="chd_risk_model", version=1, stage="Production")
