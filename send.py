@@ -7,8 +7,6 @@ import requests
 from prefect import flow, task, get_run_logger
 
 #%%
-
-
 def read(path):
     table = pq.read_table(path)
     data = table.to_pylist()
@@ -34,12 +32,12 @@ def send(data):
                 headers={"Content-Type": "application/json"},
                 data=json.dumps(row, cls=DateTimeEncoder),
             ).json()
-
+            print(f"prediction: {response}")
 
 
 def main():
     data = read(path="./output.parquet")
-    response = send(data)
+    send(data)
 
 
 main()
