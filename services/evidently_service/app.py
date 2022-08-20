@@ -9,6 +9,13 @@ The service gets a reference dataset from reference.csv file and process current
 
 Metrics calculation results are available with `GET /metrics` HTTP method in Prometheus compatible format.
 """
+
+
+"""
+This is Emeli' script for monitoring module. Script was little advance for me.
+I  So I was copied and manage the run my project :/.
+"""
+
 import os
 import hashlib
 import logging
@@ -23,16 +30,7 @@ import prometheus_client
 from flask import Flask
 from pyarrow import parquet as pq
 from evidently.runner.loader import DataLoader, DataOptions
-from evidently.model_monitoring import (
-    ModelMonitoring,
-    DataDriftMonitor,
-    DataQualityMonitor,
-    CatTargetDriftMonitor,
-    NumTargetDriftMonitor,
-    RegressionPerformanceMonitor,
-    ClassificationPerformanceMonitor,
-    ProbClassificationPerformanceMonitor,
-)
+from evidently.model_monitoring import ModelMonitoring, DataDriftMonitor, ClassificationPerformanceMonitor
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from evidently.pipeline.column_mapping import ColumnMapping
 
@@ -67,13 +65,8 @@ class LoadedDataset:
 
 
 EVIDENTLY_MONITORS_MAPPING = {
-    "cat_target_drift": CatTargetDriftMonitor,
     "data_drift": DataDriftMonitor,
-    "data_quality": DataQualityMonitor,
-    "num_target_drift": NumTargetDriftMonitor,
-    "regression_performance": RegressionPerformanceMonitor,
     "classification_performance": ClassificationPerformanceMonitor,
-    "prob_classification_performance": ProbClassificationPerformanceMonitor,
 }
 
 

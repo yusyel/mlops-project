@@ -16,7 +16,10 @@ disable = [
     "logging-too-many-args",
     "missing-class-docstring",
     "too-few-public-methods",
-    "consider-using-sys-exit"
+    "consider-using-sys-exit",
+    "trailing-whitespace",
+    "wrong-import-position",
+    "pointless-string-statement"
 
 ]
 

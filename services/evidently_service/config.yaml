@@ -22,6 +22,7 @@ datasets:
       separator: ','
     monitors:
       - data_drift
+      - classification_performance
     reference_file: ./datasets/train.parquet
 service:
   calculation_period_sec: 2
