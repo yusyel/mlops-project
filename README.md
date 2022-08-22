@@ -63,3 +63,12 @@ For sending data for prediction service there is a send.py python file
 ```bash
 python3 send.py
 ```
+![data_send](./img/img1.png)
+
+Now we can look monitoring service using Grafana
+
+```bash
+http://localhost:3000/
+```
+
+![monitoring](./img/img2.png)
