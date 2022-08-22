@@ -29,4 +29,37 @@ Medical(current)
 **Data and variable source**:  [Kaggle](https://www.kaggle.com/dileep070/heart-disease-prediction-using-logistic-regression)
 
 
-# Running Project
+# Services
+
+There are three Services in the Project. Training Service, Prediction Service and Monitoring Service. Training Service uses hyperopt for searching best parameters for model and register model as "chd_risk_model" with mlflow. Training service and prediction services shares same docker volume. With these method I can load best model with just registered model name.
+
+
+## Running Project
+
+```bash
+git clone https://github.com/yusyel/mlops-project.git
+```
+
+```bash
+cd mlops-project
+```
+
+```bash
+pipenv install --dev
+```
+
+* There is Makefile for running pylint, isort, black and docker-compose
+
+```bash
+make build
+```
+
+When the model is trained prefect log shows:
+```bash
+NFO mlflow.tracking._model_registry.client: Waiting up to 300 seconds for model version to finish creation.                     Model name: chd_risk_model, version 1 | Created version '1' of model 'chd_risk_model'.
+```
+For sending data for prediction service there is a send.py python file
+
+```bash
+python3 send.py
+```
