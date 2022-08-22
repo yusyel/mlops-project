@@ -72,3 +72,8 @@ http://localhost:3000/
 ```
 
 ![monitoring](./img/img2.png)
+
+
+## What's missing and What Can be Improve
+
+My project deployed on local and I wasn't sure how unit test and CI/CD shoud be. There is reproducibility issue for model registering. When makefile execute its remove previous ```mlflow.db``` and creates new one. With this method best model registers with version 1. I think best method is keeping ```mlflow.db``` and using mlflow model stage to archive. Whis after peer reviewing I will try this.
