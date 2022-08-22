@@ -58,7 +58,7 @@ When the model is trained prefect log shows:
 ```bash
 NFO mlflow.tracking._model_registry.client: Waiting up to 300 seconds for model version to finish creation.                     Model name: chd_risk_model, version 1 | Created version '1' of model 'chd_risk_model'.
 ```
-For sending data for prediction service there is a send.py python file
+For sending data for prediction service there is a ```send.py``` python file
 
 ```bash
 python3 send.py
