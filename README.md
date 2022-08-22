@@ -27,3 +27,6 @@ Medical(current)
 
 
 **Data and variable source**:  [Kaggle](https://www.kaggle.com/dileep070/heart-disease-prediction-using-logistic-regression)
+
+
+# Running Project
