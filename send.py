@@ -28,7 +28,7 @@ def send(data):
             tenyearchd = row["tenyearchd"]
             f_target.write(f"{row['id']},{tenyearchd}\n")
             response = requests.post(
-                "http://localhost:9000/2015-03-31/functions/function/invocations",
+                "http://127.0.0.1:9696/predict",
                 headers={"Content-Type": "application/json"},
                 data=json.dumps(row, cls=DateTimeEncoder),
             ).json()
