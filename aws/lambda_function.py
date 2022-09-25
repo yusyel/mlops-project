@@ -17,7 +17,7 @@ os.environ['AWS_DEFAULT_REGION']
 def load_model():
 
     RUN_ID =  '500ac111537445bdb89e5642819f6333'
-    logged_model = f"s3://mlops-project-yus/1/{RUN_ID}/artifacts/model"
+    logged_model = f"s3://xxxxx/1/{RUN_ID}/artifacts/model"
     model = mlflow.sklearn.load_model(logged_model)
     return model 
 
