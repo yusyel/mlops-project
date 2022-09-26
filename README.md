@@ -72,3 +72,8 @@ http://localhost:3000/
 ```
 
 ![monitoring](./img/img2.png)
+
+
+# Project Architecture
+
+![monitoring](./img/img3.jpg)
