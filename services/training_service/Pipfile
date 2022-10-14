@@ -9,7 +9,7 @@ mlflow = "*"
 pandas = "*"
 hyperopt = "*"
 pathlib = "*"
-prefect = "==2.0.4"
+prefect = "==2.6.0"
 numpy = "*"
 
 [dev-packages]

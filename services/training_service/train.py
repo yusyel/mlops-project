@@ -135,13 +135,12 @@ def clean_path(path_mlruns):
         shutil.rmtree(path_dir)
 
 
-@flow(task_runner=SequentialTaskRunner())
+@flow()
 def register():
     client = prepare_mlflow(path_db="sqlite:///mlflow.db", name="mlflow-project")
     clean_path(path_mlruns="./mlruns/1")
     client.list_experiments()
     logger = get_run_logger()
-
     df = read(path="./framingham.csv")
     df_train, df_val, y_train, y_val = split(df)
     train_dicts, val_dicts = dicts(df_train, df_val)
@@ -155,3 +154,16 @@ def register():
 
 
 register()
+
+# from prefect.deployments import Deployment
+# from prefect.orion.schemas.schedules import CronSchedule
+
+# deployment = Deployment.build_from_flow(
+# flow=register,
+# name="example-deployment",
+# version=1,
+# work_queue_name="demo",
+# schedule=(CronSchedule(cron="*/5 * * * *", timezone="America/Chicago")))
+
+
+# deployment.apply()
